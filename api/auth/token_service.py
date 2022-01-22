@@ -1,6 +1,7 @@
 import re
 import string
 import random
+import sys
 import jwt
 from common.app_settings import TOKEN_ALGORITHM, TOKEN_SECRET_KEY, REFRESH_TOKEN_LENGTH
 from auth.auth_constants import TOKEN_HEADER_REGEX, TOKEN_REGEX
@@ -14,10 +15,11 @@ class TokenService:
 
         try:
             token = re.search(TOKEN_REGEX, token).group(0)
-            token_data = jwt.decode(token, TOKEN_SECRET_KEY)
+            token_data = jwt.decode(token, TOKEN_SECRET_KEY, algorithms=['HS256'])
 
             return token_data
         except jwt.exceptions.InvalidTokenError:
+            type, value, traceback = sys.exc_info()
             return False
 
     @staticmethod

@@ -2,13 +2,13 @@ CREATE SCHEMA `loginappdb` ;
 
 CREATE TABLE `loginappdb`.`account` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `loginappdb`.`refresh_token` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `token` VARCHAR(45) NOT NULL,
+  `token` VARCHAR(255) NOT NULL,
   `expires_at` DATETIME NOT NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`));

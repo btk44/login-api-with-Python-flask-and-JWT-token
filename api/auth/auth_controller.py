@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response
-from auth.account_dto import AccountDto
+from auth.dto.account_dto import AccountDto
 from auth.auth_manager import AuthManager
 
 auth_api = Blueprint('auth_api', __name__, url_prefix='/auth')
@@ -21,11 +21,11 @@ def login():
 def refresh():
     data = request.get_json()
 
-    if not data or not data['refreshToken']:
-        return make_response('Invalid refresh token', 400)
+    if not data or not data['refreshToken'] or not data['accountId']:
+        return make_response('Missing data', 400)
 
     auth_manager = AuthManager()
-    success, token_data, message, status_code = auth_manager.refresh_token(data['refreshToken'])
+    success, token_data, message, status_code = auth_manager.refresh_token(data['accountId'], data['refreshToken'])
 
     if not success:
         return make_response(message, status_code)
